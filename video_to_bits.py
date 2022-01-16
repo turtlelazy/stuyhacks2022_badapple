@@ -119,7 +119,7 @@ def number_to_string(places,number):
 def apples(image_directory,img_format):
     '''gets all the frames from a directory'''
     frames_count = count_frames(image_directory)
-    places = len(str(frames_count)) + 1
+    places = 5
     frames_arrays = []
 
 
@@ -189,21 +189,20 @@ def printAnimation(applez,fps):
 
 
 def main():
-    video_path = sys.argv[1]
-    applez = apples(video_path,'png')
+    applez = apples("bin",'png')
     basket = int(65536/48)
     applez_baskets = [applez[i:i + basket]
                       for i in range(0, len(applez), basket)]
 
     for i in range(len(applez_baskets)):
         create_vhex(applez_baskets[i],
-                    f"hexcodes/video{i}.hex",
+                    f"hex/video{i}.hex",
                     end=i == len(applez_baskets)-1)
 
 
 if __name__ == "__main__":
     main()
-    
+
     # applez = apples("bad_apple_files/images", "png")
     # basket = int(65536/48)
     # applez_baskets = [applez[i:i + basket]

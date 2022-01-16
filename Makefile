@@ -4,11 +4,12 @@ default:
 
 download:
 
-	retrieve_video.py $(ARGS)
-	ffmpeg -i $(ARGS) -vf scale=16:16 out.mp4
+	rm in.mp4
+	python3 retrieve_video.py $(ARGS)
+	ffmpeg -i in.mp4 -vf scale=16:16 out.mp4
 	rm -r bin
 	rm -r hex
-
+	mkdir bin
+	mkdir hex
 	ffmpeg -i "out.mp4" -f image2 "bin/%05d.png"
-
-	video_to_bits.py 'out.mp4'
+	python3 video_to_bits.py
