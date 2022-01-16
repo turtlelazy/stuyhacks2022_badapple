@@ -173,8 +173,6 @@ def create_vhex(applez,name,start,end):
     output = apples_2_vhex(applez)
     if not end:
         output.replace(str(hex(15)),"")
-    if not start:
-        output.replace("v2.0 raw","")
 
     file = open(name, 'w')
     file.write(output)
@@ -198,8 +196,7 @@ if __name__ == "__main__":
     for i in range(len(applez_baskets)):
         create_vhex(applez_baskets[i],
         f"baddapplehex{i}.hex",
-        end=i==len(applez_baskets)-1,
-        start=i==0)
+        end=i==len(applez_baskets)-1)
 
     # print(applez)
     # print(len(applez)[0])
