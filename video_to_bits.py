@@ -2,6 +2,7 @@ from time import sleep
 from PIL import Image
 import os
 import json
+import sys
 
 def get_pixel(x,y,pixel_values,width):
     '''get pixel given list of im.getdata'''
@@ -187,16 +188,31 @@ def printAnimation(applez,fps):
         print_matrix_bw(apple)
 
 
-if __name__ == "__main__":
-    applez = apples("bad_apple_files/images", "png")
+def main():
+    video_path = sys.argv[1]
+    applez = apples(video_path,'png')
     basket = int(65536/48)
     applez_baskets = [applez[i:i + basket]
                       for i in range(0, len(applez), basket)]
 
     for i in range(len(applez_baskets)):
         create_vhex(applez_baskets[i],
-        f"baddapplehex{i}.hex",
-        end= i==len(applez_baskets)-1)
+                    f"hexcodes/video{i}.hex",
+                    end=i == len(applez_baskets)-1)
+
+
+if __name__ == "__main__":
+    main()
+    
+    # applez = apples("bad_apple_files/images", "png")
+    # basket = int(65536/48)
+    # applez_baskets = [applez[i:i + basket]
+    #                   for i in range(0, len(applez), basket)]
+
+    # for i in range(len(applez_baskets)):
+    #     create_vhex(applez_baskets[i],
+    #     f"baddapplehex{i}.hex",
+    #     end= i==len(applez_baskets)-1)
 
     # print(applez)
     # print(len(applez)[0])
