@@ -157,7 +157,7 @@ def apples_2_vhex(applez):
     for byte in four_bit_bytes_paired:
         print(byte)
     start = "v2.0 raw"
-    end = str(hex(15)) + "\n"
+    end = str(hex(15))
     byte_prefix = hex(5)
     return_string = start + "\n"
 
@@ -172,7 +172,7 @@ def create_vhex(applez,name,end):
     '''creates vhex file for set of frames, applez'''
     output = apples_2_vhex(applez)
     if not end:
-        output = output.replace("\n0xf\n", "")
+        output = output[:len(output)-len(str(hex(15)))]
 
     file = open(name, 'w')
     file.write(output)
