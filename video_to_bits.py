@@ -168,10 +168,16 @@ def apples_2_vhex(applez):
     print (return_string)
     return return_string
 
-def create_vhex(applez,name):
+def create_vhex(applez,name,start,end):
     '''creates vhex file for set of frames, applez'''
+    output = apples_2_vhex(applez)
+    if not end:
+        output.replace(str(hex(15)),"")
+    if not start:
+        output.replace("v2.0 raw","")
+
     file = open(name, 'w')
-    file.write(apples_2_vhex(applez))
+    file.write(output)
     file.close()
 
 def printAnimation(applez,fps):
@@ -190,7 +196,11 @@ if __name__ == "__main__":
                       for i in range(0, len(applez), basket)]
 
     for i in range(len(applez_baskets)):
-        create_vhex(applez_baskets[i],f"baddapplehex{i}.hex")
+        create_vhex(applez_baskets[i],
+        f"baddapplehex{i}.hex",
+        end=i==len(applez_baskets)-1,
+        start=i==0)
+
     # print(applez)
     # print(len(applez)[0])
 
