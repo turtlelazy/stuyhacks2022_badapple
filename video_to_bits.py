@@ -1,3 +1,4 @@
+from time import sleep
 from PIL import Image
 import os
 import json
@@ -51,10 +52,18 @@ def frames_2_binary(frames):
 
     return binary
 
-def print_matrix(array):
+def print_matrix_bw(array):
     '''prints a given 2D array'''
-    for x in range(len(array)):
-        print (array[x])
+    for r in range(len(array)):
+        for c in range(len(array[0])):
+            if array[r][c] == 0:
+                print("#",end="")
+            else:
+                print("@",end="")
+            print("",end="")
+
+        print("")
+        
 
 def preview(bw):
     print(len(bw))
@@ -76,7 +85,7 @@ def test():
     width, height = im.size
     pixel_values = list(im.getdata())
     bw = black_scale(array_pixels(pixel_values, width, height))
-    print_matrix(bw)
+    print_matrix_bw(bw)
 
     preview(bw)
 
@@ -134,17 +143,19 @@ def bad_apple_json():
 def apples_2_vhex(applez):
     '''takes in a set of video frames and converts it to vhex'''
     binary = frames_2_binary(applez)
-    byte_count = 8
+    byte_count = 16
     eight_bit_bytes = [binary[i:i + byte_count]
                        for i in range(0, len(binary), byte_count)]
-
+    
     four_bit_bytes_paired = []
     for byte in eight_bit_bytes:
-        byte_count = 4
-        four_bit_bytes_duo = [byte[i:i + byte_count]
+        byte_count = 8
+        four_bit_bytes_duo = [int(byte[i:i + byte_count],2)
                               for i in range(0, len(byte), byte_count)]
         four_bit_bytes_paired.append(four_bit_bytes_duo)
 
+    for byte in four_bit_bytes_paired:
+        print(byte)
     start = "v2.0 raw"
     end = str(hex(15))
     byte_prefix = hex(5)
@@ -152,8 +163,9 @@ def apples_2_vhex(applez):
 
     for byte_duo in four_bit_bytes_paired:
         return_string += f"{byte_prefix}\n{hex(int(byte_duo[0]))}\n{hex(int(byte_duo[1]))}\n"
-
+    
     return_string += end
+    print (return_string)
     return return_string
 
 def create_vhex(applez,name):
@@ -162,16 +174,33 @@ def create_vhex(applez,name):
     file.write(apples_2_vhex(applez))
     file.close()
 
+def printAnimation(applez,fps):
+    frequency = 1.0/60
+    for apple in applez:
+        sleep(frequency)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print("\n")
+        print_matrix_bw(apple)
 
 
 if __name__ == "__main__":
     applez = apples("bad_apple_files/images", "png")
+    basket = int(65536/48)
+    applez_baskets = [applez[i:i + basket]
+                      for i in range(0, len(applez), basket)]
 
-
+    for i in range(len(applez_baskets)):
+        create_vhex(applez_baskets[i],f"baddapplehex{i}.hex")
     # print(applez)
     # print(len(applez)[0])
 
-    create_vhex(applez,"baddapple.hex")
+    # fps = 60
+    # frequency = 1.0/60
+    # for apple in applez:
+    #     sleep(frequency)
+    #     os.system('cls' if os.name == 'nt' else 'clear')
+    #     print("\n")
+    #     print_matrix_bw(apple)
     
 
 
