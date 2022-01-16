@@ -157,7 +157,7 @@ def apples_2_vhex(applez):
     for byte in four_bit_bytes_paired:
         print(byte)
     start = "v2.0 raw"
-    end = str(hex(15))
+    end = str(hex(15)) + "\n"
     byte_prefix = hex(5)
     return_string = start + "\n"
 
@@ -168,11 +168,11 @@ def apples_2_vhex(applez):
     print (return_string)
     return return_string
 
-def create_vhex(applez,name,start,end):
+def create_vhex(applez,name,end):
     '''creates vhex file for set of frames, applez'''
     output = apples_2_vhex(applez)
     if not end:
-        output.replace(str(hex(15)),"")
+        output = output.replace("\n0xf\n", "")
 
     file = open(name, 'w')
     file.write(output)
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     for i in range(len(applez_baskets)):
         create_vhex(applez_baskets[i],
         f"baddapplehex{i}.hex",
-        end=i==len(applez_baskets)-1)
+        end= i==len(applez_baskets)-1)
 
     # print(applez)
     # print(len(applez)[0])
