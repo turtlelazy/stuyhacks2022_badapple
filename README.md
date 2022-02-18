@@ -2,6 +2,9 @@
 
 ## Roster: Ishraq Mahid, Kellen Yu
 
+### Project Links
+Hackathon Submission: https://devpost.com/software/making-a-computer-to-play-bad-apple
+Results: https://www.youtube.com/watch?v=w_mW0DWru-A
 ### Inspiration
 We learned a lot about the basics of computers from the Ben Eater 8 bit CPU playlist:
 https://www.youtube.com/watch?v=HyznrdDSSGM&list=PLowKtXNTBypGqImE405J2565dvjafglHU
